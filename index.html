@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <title>StreamDrop — Video Downloader</title>
+  <meta
+    name="description"
+    content="StreamDrop is a modern video downloader interface for supported public media URLs."
+  />
+
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div class="app-shell">
+
+    <!-- ================= HEADER ================= -->
+    <header class="topbar">
+      <div class="topbar-inner">
+
+        <a href="/" class="brand" aria-label="StreamDrop Home">
+          <span class="brand-mark">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+              <rect x="3" y="3" width="42" height="42" rx="13"></rect>
+              <path d="M17 14v20l17-10z"></path>
+              <path d="M25 30l-4 5h8z" class="brand-arrow"></path>
+            </svg>
+          </span>
+
+          <span class="brand-copy">
+            <strong>StreamDrop</strong>
+            <small>Fast. Simple. Clean.</small>
+          </span>
+        </a>
+
+        <div class="header-actions">
+          <div class="live-status">
+            <span class="status-dot"></span>
+            <span>Online</span>
+          </div>
+        </div>
+
+      </div>
+    </header>
+
+
+    <!-- ================= MAIN ================= -->
+    <main class="main-content">
+
+      <!-- HERO -->
+      <section class="hero">
+        <div class="hero-badge">
+          <span class="spark"></span>
+          Modern video downloader
+        </div>
+
+        <h1>
+          Download your video
+          <span class="gradient-text">in seconds.</span>
+        </h1>
+
+        <p class="hero-description">
+          Paste a supported public video URL, choose your preferred quality
+          and format, then download your media.
+        </p>
+      </section>
+
+
+      <!-- ================= DOWNLOAD CARD ================= -->
+      <section class="download-card">
+
+        <div class="card-heading">
+          <div>
+            <span class="eyebrow">VIDEO URL</span>
+            <h2>Paste your link</h2>
+          </div>
+
+          <div class="secure-pill">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3l7 3v5c0 4.6-2.9 8.7-7 10-4.1-1.3-7-5.4-7-10V6l7-3z"></path>
+              <path d="M9 12l2 2 4-4"></path>
+            </svg>
+            Secure
+          </div>
+        </div>
+
+
+        <!-- URL INPUT -->
+        <div class="url-box">
+          <div class="url-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M10 13a5 5 0 0 0 7.1.1l2-2a5 5 0 0 0-7.1-7.1l-1.1 1.1"></path>
+              <path d="M14 11a5 5 0 0 0-7.1-.1l-2 2A5 5 0 0 0 12 20l1.1-1.1"></path>
+            </svg>
+          </div>
+
+          <input
+            id="urlInput"
+            type="url"
+            autocomplete="off"
+            spellcheck="false"
+            placeholder="Paste video URL here..."
+            aria-label="Video URL"
+          />
+
+          <button id="pasteBtn" class="paste-btn" type="button">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="8" y="4" width="11" height="16" rx="2"></rect>
+              <path d="M8 7H6a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-2"></path>
+              <path d="M10 4h6"></path>
+            </svg>
+            Paste
+          </button>
+        </div>
+
+
+        <!-- METADATA -->
+        <div id="metadataPanel" class="metadata-panel hidden">
+          <div class="metadata-thumb" id="metadataThumb">
+            <div class="thumb-placeholder">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M4 5h16v14H4z"></path>
+                <path d="M10 9l5 3-5 3z"></path>
+              </svg>
+            </div>
+          </div>
+
+          <div class="metadata-content">
+            <span class="metadata-label">VIDEO</span>
+            <h3 id="videoTitle">Loading video...</h3>
+
+            <div class="metadata-meta">
+              <span id="videoUploader">—</span>
+              <span class="separator">•</span>
+              <span id="videoDuration">—</span>
+            </div>
+          </div>
+        </div>
+
+
+        <!-- OPTIONS -->
+        <div class="options-grid">
+
+          <!-- QUALITY -->
+          <div class="option-field">
+            <label for="qualitySelect">
+              <span>Quality</span>
+              <small>Resolution</small>
+            </label>
+
+            <div class="select-wrap">
+              <select id="qualitySelect">
+                <option value="best" selected>Best Available</option>
+                <option value="original">Original</option>
+                <option value="16k">16K Ultra HD</option>
+                <option value="8k">8K Ultra HD</option>
+                <option value="4k">4K Ultra HD</option>
+                <option value="1080p">1080p Full HD</option>
+                <option value="720p">720p HD</option>
+              </select>
+
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 9l6 6 6-6"></path>
+              </svg>
+            </div>
+          </div>
+
+
+          <!-- FORMAT -->
+          <div class="option-field">
+            <label for="formatSelect">
+              <span>Format</span>
+              <small>Output type</small>
+            </label>
+
+            <div class="select-wrap">
+              <select id="formatSelect">
+                <option value="original" selected>Original</option>
+                <option value="mp4">MP4</option>
+                <option value="webm">WEBM</option>
+                <option value="mov">MOV</option>
+                <option value="audio">MP3 Audio</option>
+              </select>
+
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M6 9l6 6 6-6"></path>
+              </svg>
+            </div>
+          </div>
+
+        </div>
+
+
+        <!-- DOWNLOAD BUTTON -->
+        <button id="downloadBtn" class="download-btn" type="button">
+          <span class="download-btn-content">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3v12"></path>
+              <path d="M7 10l5 5 5-5"></path>
+              <path d="M5 20h14"></path>
+            </svg>
+
+            <span>Download Video</span>
+          </span>
+
+          <span class="download-btn-arrow">→</span>
+        </button>
+
+
+        <!-- PROGRESS -->
+        <div id="progressSection" class="progress-section hidden">
+
+          <div class="progress-top">
+            <div class="progress-status">
+              <span class="spinner"></span>
+              <span id="progressText">Preparing download...</span>
+            </div>
+
+            <span id="progressPercent">0%</span>
+          </div>
+
+          <div class="progress-track">
+            <div id="progressBar" class="progress-bar"></div>
+          </div>
+
+          <div class="progress-bottom">
+            <span id="progressDetail">Analyzing source</span>
+            <button id="cancelBtn" class="cancel-btn" type="button">
+              Cancel
+            </button>
+          </div>
+
+        </div>
+
+
+        <!-- ERROR -->
+        <div id="errorBox" class="message-box error-box hidden">
+          <div class="message-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"></circle>
+              <path d="M12 7v6"></path>
+              <path d="M12 16h.01"></path>
+            </svg>
+          </div>
+
+          <div>
+            <strong>Download failed</strong>
+            <p id="errorMessage">Something went wrong.</p>
+          </div>
+        </div>
+
+
+        <!-- SUCCESS -->
+        <div id="successBox" class="message-box success-box hidden">
+          <div class="message-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="9"></circle>
+              <path d="M8 12l3 3 5-6"></path>
+            </svg>
+          </div>
+
+          <div>
+            <strong>Download completed</strong>
+            <p id="successMessage">
+              Your video is ready.
+            </p>
+          </div>
+        </div>
+
+      </section>
+
+
+      <!-- ================= GLOBAL COUNTER ================= -->
+      <section class="stats-card">
+
+        <div class="stats-left">
+          <div class="stats-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 3v12"></path>
+              <path d="M7 10l5 5 5-5"></path>
+              <path d="M4 20h16"></path>
+            </svg>
+          </div>
+
+          <div>
+            <span class="stats-label">GLOBAL SUCCESSFUL DOWNLOADS</span>
+            <p>Videos successfully downloaded by StreamDrop</p>
+          </div>
+        </div>
+
+        <div class="counter-wrap">
+          <span id="globalCount">0</span>
+          <span class="counter-plus">+</span>
+        </div>
+
+      </section>
+
+
+      <!-- ================= FEATURES ================= -->
+      <section class="features-section">
+
+        <div class="section-heading">
+          <span class="eyebrow">WHY STREAMDROP</span>
+          <h2>Simple by design.</h2>
+        </div>
+
+        <div class="features-grid">
+
+          <article class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3v12"></path>
+                <path d="M7 10l5 5 5-5"></path>
+                <path d="M5 20h14"></path>
+              </svg>
+            </div>
+
+            <h3>Best Quality</h3>
+            <p>
+              Select the best available source quality without unnecessary
+              quality loss.
+            </p>
+          </article>
+
+
+          <article class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="12" cy="12" r="9"></circle>
+                <path d="M12 7v5l3 2"></path>
+              </svg>
+            </div>
+
+            <h3>Fast Processing</h3>
+            <p>
+              Clean processing flow with live status and download progress.
+            </p>
+          </article>
+
+
+          <article class="feature-card">
+            <div class="feature-icon">
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M12 3l7 3v5c0 4.6-2.9 8.7-7 10-4.1-1.3-7-5.4-7-10V6l7-3z"></path>
+                <path d="M9 12l2 2 4-4"></path>
+              </svg>
+            </div>
+
+            <h3>Clean & Safe</h3>
+            <p>
+              A simple interface designed to keep the download process clear
+              and easy to understand.
+            </p>
+          </article>
+
+        </div>
+
+      </section>
+
+
+      <!-- ================= NOTICE ================= -->
+      <section class="notice-card">
+        <div class="notice-icon">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="9"></circle>
+            <path d="M12 8h.01"></path>
+            <path d="M11 11h1v5h1"></path>
+          </svg>
+        </div>
+
+        <div>
+          <strong>Supported public media only</strong>
+          <p>
+            StreamDrop cannot bypass DRM, private access, authentication,
+            paywalls, or other technical protections.
+          </p>
+        </div>
+      </section>
+
+    </main>
+
+
+    <!-- ================= FOOTER ================= -->
+    <footer class="footer">
+      <div class="footer-inner">
+
+        <div class="footer-brand">
+          <div class="footer-logo">
+            <svg viewBox="0 0 48 48" aria-hidden="true">
+              <rect x="3" y="3" width="42" height="42" rx="13"></rect>
+              <path d="M17 14v20l17-10z"></path>
+            </svg>
+          </div>
+
+          <div>
+            <strong>StreamDrop</strong>
+            <span>Fast. Simple. Clean.</span>
+          </div>
+        </div>
+
+        <div class="footer-right">
+          <span>© 2026 StreamDrop</span>
+          <span class="footer-dot"></span>
+          <span>Built for the web</span>
+        </div>
+
+      </div>
+    </footer>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
